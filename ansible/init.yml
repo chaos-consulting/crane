@@ -1,0 +1,24 @@
+- hosts: crane
+  remote_user: pi
+  become_user: root
+  become: yes
+  tasks:
+    - name: install zsh and sudo
+      apt: name=zsh,sudo state=present update_cache=yes
+    - name: add grml zsh config
+      get_url: url=http://git.grml.org/f/grml-etc-core/etc/zsh/zshrc dest=/etc/zsh/zshrc
+    - name: allow wheel group to use sudo
+      lineinfile: "dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) NOPASSWD: ALL'"
+    - name: change root shell
+      user: name=root shell=/bin/zsh state=present
+    - name: add wheel group
+      group: name=wheel state=present
+    - name: add user jb
+      user: name=jb shell=/bin/zsh state=present createhome=yes groups=users,wheel
+    - name: add empty zshrc for jb
+      file: path=/home/jb/.zshrc owner=jb group=jb state=touch
+    - name: add public key
+      authorized_key: user=jb key="{{ item }}" state=present
+      with_file:
+        - public_keys/yubikey.pub
+
