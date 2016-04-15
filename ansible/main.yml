@@ -1,0 +1,30 @@
+- hosts: crane
+  tasks:
+    - name: set hostname
+      become: true
+      become_user: root
+      hostname: name=crane.chaos-consulting.de
+    - name: create openhab group
+      become: true
+      become_user: root
+      group: state=present name=openhab
+    - name: add users to openhab group
+      become: true
+      become_user: root
+      user: name={{ item }} append=yes groups=openhab state=present
+      with_items:
+        - pi
+        - jb
+    - name: create openHAB directory
+      become: true
+      become_user: root
+      file: name=/opt/openHAB/ state=directory group=openhab mode=g+w
+    - name: fetch openHAB installation files
+      unarchive:
+        src: https://openhab.ci.cloudbees.com/job/openHAB-Distribution/lastSuccessfulBuild/artifact/distributions/openhab-online/target/openhab-online-2.0.0-SNAPSHOT.zip
+        dest: /opt/openHAB
+        group: openhab
+        mode: g+w
+        copy: no
+        creates: /opt/openHAB/start.sh
+
