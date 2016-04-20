@@ -8,6 +8,10 @@
       become: true
       become_user: root
       group: state=present name=openhab
+    - name: create openhab user
+      become: true
+      become_user: root
+      user: state=present name=openhab home=/opt/openhab/ group=openhab
     - name: add users to openhab group
       become: true
       become_user: root
@@ -15,16 +19,11 @@
       with_items:
         - pi
         - jb
-    - name: create openHAB directory
-      become: true
-      become_user: root
-      file: name=/opt/openHAB/ state=directory group=openhab mode=g+w
     - name: fetch openHAB installation files
       unarchive:
         src: https://openhab.ci.cloudbees.com/job/openHAB-Distribution/lastSuccessfulBuild/artifact/distributions/openhab-online/target/openhab-online-2.0.0-SNAPSHOT.zip
-        dest: /opt/openHAB
+        dest: /opt/openhab
         group: openhab
         mode: g+w
         copy: no
-        creates: /opt/openHAB/start.sh
-
+        creates: /opt/openhab/start.sh
