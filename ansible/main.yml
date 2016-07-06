@@ -27,10 +27,15 @@
         mode: g+w
         copy: no
         creates: /opt/openhab/start.sh
+      
 
 - hosts: crane
   become: true
   become_user: root
   tasks:
+    - name: add key for mosquitto repo
+      apt_key: url=http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key state=present
+    - name: add alternative mosquitto repo
+      apt_repository: repo='deb http://repo.mosquitto.org/debian wheezy main' state=present
     - name: install a few support tools for openhab to use
       apt: state=present name=mosquitto
