@@ -19,6 +19,10 @@
       with_items:
         - pi
         - jb
+    - name: allow all openhab members to become openhab user
+      become: true
+      become_user: root
+      lineinfile: "dest=/etc/sudoers state=present regexp='^%openhab' line='%openhab ALL=(ALL) NOPASSWD: ALL'"
     - name: fetch openHAB installation files
       unarchive:
         src: https://openhab.ci.cloudbees.com/job/openHAB-Distribution/lastSuccessfulBuild/artifact/distributions/openhab-offline/target/openhab-offline-2.0.0-SNAPSHOT.zip
