@@ -50,3 +50,20 @@
       apt: state=latest name=mosquitto-clients
     - name: install libmosquitto1
       apt: state=latest name=libmosquitto1
+    #
+    # Firewall setup
+    #
+    - name: install firewalld
+      apt: state=present name=firewalld
+    - name: configure firewall zone home
+      firewalld: zone=home interface=eth0 permanent=yes immediate=yes state=enabled
+    - name: configure firewall zone public
+      firewalld: zone=public interface=wlan0 permanent=yes immediate=yes state=enabled
+    - name: disable ssh on public zone
+      firewalld: zone=public service=ssh permanent=yes immediate=yes state=disabled 
+    - name: enable mosquitto (1883) on home zone
+      firewalld: zone=home port=1883/tcp permanent=yes immediate=yes state=enabled
+    - name: enable mosquitto encrypted (8883) on home zone
+      firewalld: zone=home port=8883/tcp permanent=yes immediate=yes state=enabled
+    - name: enable openhab webui (8443) on home zone
+      firewalld: zone=home port=8443/tcp permanent=yes immediate=yes state=enabled
