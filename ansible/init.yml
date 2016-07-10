@@ -15,8 +15,14 @@
       user: name=jb shell=/bin/zsh state=present createhome=yes groups=users,wheel
     - name: add empty zshrc for jb
       file: path=/home/jb/.zshrc owner=jb group=jb state=touch
-    - name: add public key
+    - name: add public key jb
       authorized_key: user=jb key="{{ item }}" state=present
       with_file:
         - public_keys/yubikey.pub
-
+    - name: add user domfi
+      user: name=domfi shell=/bin/bash state=present createhome=yes groups=users,wheel
+    - name: add public key domfi
+      authorized_key: user=domfi key="{{ item }}" state=present
+      with_file:
+        - public_keys/domfi.pub
+ 

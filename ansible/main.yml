@@ -19,11 +19,14 @@
       with_items:
         - pi
         - jb
+        - domfi
     - name: allow all openhab members to become openhab user
       become: true
       become_user: root
       lineinfile: "dest=/etc/sudoers state=present regexp='^%openhab' line='%openhab ALL=(ALL) NOPASSWD: ALL'"
     - name: fetch openHAB installation files
+      become: true
+      become_user: openhab
       unarchive:
         src: https://openhab.ci.cloudbees.com/job/openHAB-Distribution/lastSuccessfulBuild/artifact/distributions/openhab-offline/target/openhab-offline-2.0.0-SNAPSHOT.zip
         dest: /opt/openhab
@@ -41,5 +44,9 @@
       apt_key: url=http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key state=present
     - name: add alternative mosquitto repo
       apt_repository: repo='deb http://repo.mosquitto.org/debian wheezy main' state=present
-    - name: install a few support tools for openhab to use
-      apt: state=present name=mosquitto
+    - name: install mosquitto
+      apt: state=latest name=mosquitto
+    - name: install mosquitto-clients
+      apt: state=latest name=mosquitto-clients
+    - name: install libmosquitto1
+      apt: state=latest name=libmosquitto1
