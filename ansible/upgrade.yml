@@ -1,0 +1,12 @@
+- hosts: crane
+  become: true
+  become_user: root
+  tasks:
+    - name: update and dist-upgrade
+      apt: upgrade=dist update_cache=yes autoremove=yes
+    - command: apt-get -y autoremove
+    - stat: path=/var/run/reboot-required
+      register: reboot_if_required
+    - command: shutdown -r 1
+      when: reboot_if_required.stat.exists == True
+
