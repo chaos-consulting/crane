@@ -3,6 +3,14 @@
   become_user: root
   become: yes
   tasks:
+    - name: setup wpa_supplicant
+      copy: src=files/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600 owner=root group=root
+    - name: stop wlan0
+      command: ifdown wlan0
+    - name: start wlan0
+      command: ifup wlan0
+    - name: sleep
+      command: sleep 10
     - name: install zsh and sudo
       apt: name=zsh,sudo state=present update_cache=yes
     - name: add grml zsh config

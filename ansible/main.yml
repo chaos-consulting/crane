@@ -53,6 +53,6 @@
     - name: configure avahi-daemon
       copy: src=files/avahi-daemon.conf dest=/etc/avahi/avahi_daemon.conf owner=root group=root mode=644
     - name: configure service _mqtt._tcp
-      copy: src=files/mqtt.service dest=/etc/avahi/avahi_daemon.conf owner=root group=root mode=644
+      copy: src=files/mqtt.service dest=/etc/avahi/services/mqtt.services owner=root group=root mode=644
     - name: restart avahi-daemon
       service: name=avahi-daemon state=restarted
