@@ -26,11 +26,10 @@
     - name: add public key jb
       authorized_key: user=jb key="{{ item }}" state=present
       with_file:
-        - public_keys/yubikey.pub
+        - public_keys/jb.pub
     - name: add user domfi
       user: name=domfi shell=/bin/bash state=present createhome=yes groups=users,wheel
     - name: add public key domfi
       authorized_key: user=domfi key="{{ item }}" state=present
       with_file:
         - public_keys/domfi.pub
- 
