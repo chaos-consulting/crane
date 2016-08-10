@@ -56,3 +56,5 @@
       copy: src=files/mqtt.service dest=/etc/avahi/services/mqtt.services owner=root group=root mode=644
     - name: restart avahi-daemon
       service: name=avahi-daemon state=restarted
+    - name: install openjdk-8-runtime
+      apt: state=latest name=openjdk-8-jre-headless
