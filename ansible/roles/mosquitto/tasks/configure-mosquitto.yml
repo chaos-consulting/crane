@@ -1,0 +1,14 @@
+- name: copy tls key for {{inventory_hostname}}
+  copy: src=files/{{inventory_hostname}}/mosquitto.key dest=/etc/mosquitto/certs/ owner=mosquitto group=mosquitto mode=0400
+- name: copy tls cert for {{inventory_hostname}}
+  copy: src=files/{{inventory_hostname}}/mosquitto.crt dest=/etc/mosquitto/certs/ owner=mosquitto group=mosquitto mode=0400
+- name: copy ca file for {{inventory_hostname}}
+  copy: src=files/{{inventory_hostname}}/ca.crt dest=/etc/mosquitto/certs/ owner=mosquitto group=mosquitto mode=0444
+- name: copy acl file
+  copy: src=files/mosquitto.acl dest=/etc/mosquitto owner=mosquitto group=mosquitto mode=0400
+- name: copy password file
+  copy: src=files/mosquitto.pw dest=/etc/mosquitto owner=mosquitto group=mosquitto mode=0400
+- name: copy tls configuration file
+  copy: src=files/tls.conf dest=/etc/mosquitto/conf.d owner=mosquitto group=mosquitto mode=0400
+- name: copy avahi service definition
+  copy: src=files/mqtts.service dest=/etc/avahi/services/ owner=root group=root mode=0444

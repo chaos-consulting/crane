@@ -39,22 +39,8 @@
 - hosts: crane
   become: true
   become_user: root
+  roles:
+    - mosquitto
   tasks:
-    - name: add key for mosquitto repo
-      apt_key: url=http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key state=present
-    - name: add alternative mosquitto repo
-      apt_repository: repo='deb http://repo.mosquitto.org/debian wheezy main' state=present
-    - name: install mosquitto
-      apt: state=latest name=mosquitto
-    - name: install mosquitto-clients
-      apt: state=latest name=mosquitto-clients
-    - name: install libmosquitto1
-      apt: state=latest name=libmosquitto1
-    - name: configure avahi-daemon
-      copy: src=files/avahi-daemon.conf dest=/etc/avahi/avahi_daemon.conf owner=root group=root mode=644
-    - name: configure service _mqtt._tcp
-      copy: src=files/mqtt.service dest=/etc/avahi/services/mqtt.services owner=root group=root mode=644
-    - name: restart avahi-daemon
-      service: name=avahi-daemon state=restarted
     - name: install openjdk-8-runtime
       apt: state=latest name=openjdk-8-jre-headless
