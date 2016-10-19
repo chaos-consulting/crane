@@ -26,3 +26,10 @@ openssl req -out mosquitto.csr -key mosquitto.key -new
 openssl x509 -req -in mosquitto.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out mosquitto.crt -days 9001
 ```
 
+# Avahi
+Der Mosquittoserver wird über Avahi im Netz bekannt gemacht. Ob es funktioniert kann man mit
+folgendem Befehl (aus dem Paket avahi-utils) testen:
+
+```
+/usr/bin/avahi-browse _mqtts._tcp -r -t
+``` 
