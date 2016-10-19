@@ -36,7 +36,7 @@ in den Räumen von Chaos-Consulting.
 ## HowTo `upgrade.yml`
 
 ```bash
-ansible-plabook -i hosts upgrade.yml
+ansible-playbook -i hosts upgrade.yml
 ```
 
 Aktualisiert das System und rebootet es, wenn die Updates dies verlangen.
