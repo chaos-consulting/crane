@@ -3,7 +3,7 @@
   become_user: root
   tasks:
     - name: update and dist-upgrade
-      apt: upgrade=dist update_cache=yes autoremove=yes
+      apt: upgrade=dist update_cache=yes 
     - command: apt-get -y autoremove
     - stat: path=/var/run/reboot-required
       register: reboot_if_required
