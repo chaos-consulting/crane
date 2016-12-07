@@ -1,0 +1,14 @@
+---
+
+- name: add openhab gpg key
+  apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=openhab state=present
+- name: add openhab2 beta repo
+  apt_repository: repo="deb http://dl.bintray.com/openhab/apt-repo2 testing main" filename=openhab2 state=present
+- name: install openhab2 offline
+  apt: name=openhab2-offline state=latest update_cache=true
+- name: add configuration
+  synchronize: src=files/conf/openhab2 dest=/etc/ owner=no group=no
+- name: use openhab user/group for configuration files
+  file: dest=/etc/openhab2 owner=openhab group=openhab recurse=yes
+- name: enable openhab2 service
+  service: name=openhab2 enabled=yes state=started

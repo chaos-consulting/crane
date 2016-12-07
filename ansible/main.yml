@@ -24,18 +24,13 @@
       become: true
       become_user: root
       lineinfile: "dest=/etc/sudoers state=present regexp='^%openhab' line='%openhab ALL=(ALL) NOPASSWD: ALL'"
-    - name: add openhab gpg key
-      apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=openhab state=present
-    - name: add openhab2 beta repo
-      apt_repository: repo="deb http://dl.bintray.com/openhab/apt-repo2 testing main" filename=openhab2 state=present
-    - name: install openhab2 offline
-        apt: name=openhab2-offline state=latest update_cache=true
 
 - hosts: crane
   become: true
   become_user: root
   roles:
     - mosquitto
+    - openhab
   tasks:
     - name: install openjdk-8-runtime
       apt: state=latest name=openjdk-8-jre-headless
