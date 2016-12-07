@@ -1,5 +1,7 @@
 ---
 
+- name: install dependencies
+  apt: name=rsync state=present
 - name: add openhab gpg key
   apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=openhab state=present
 - name: add openhab2 beta repo
