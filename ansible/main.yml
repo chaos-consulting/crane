@@ -24,17 +24,12 @@
       become: true
       become_user: root
       lineinfile: "dest=/etc/sudoers state=present regexp='^%openhab' line='%openhab ALL=(ALL) NOPASSWD: ALL'"
-    - name: fetch openHAB installation files
-      become: true
-      become_user: openhab
-      unarchive:
-        src: https://openhab.ci.cloudbees.com/job/openHAB-Distribution/lastSuccessfulBuild/artifact/distributions/openhab-offline/target/openhab-offline-2.0.0-SNAPSHOT.zip
-        dest: /opt/openhab
-        group: openhab
-        mode: g+w
-        copy: no
-        creates: /opt/openhab/start.sh
-      
+    - name: add openhab gpg key
+      apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=openhab state=present
+    - name: add openhab2 beta repo
+      apt_repository: repo="deb http://dl.bintray.com/openhab/apt-repo2 testing main" filename=openhab2 state=present
+    - name: install openhab2 offline
+        apt: name=openhab2-offline state=latest update_cache=true
 
 - hosts: crane
   become: true
