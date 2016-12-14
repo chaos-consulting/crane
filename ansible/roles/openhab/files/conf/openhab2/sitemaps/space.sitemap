@@ -1,0 +1,4 @@
+sitemap space label="C2IS Space" {
+    Frame label="Status" {
+    }
+}

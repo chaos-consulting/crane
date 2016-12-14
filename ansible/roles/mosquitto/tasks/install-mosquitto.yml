@@ -1,0 +1,12 @@
+- name: add key for mosquitto repo
+  apt_key: url=http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key state=present
+- name: add alternative mosquitto repo
+  apt_repository: repo='deb http://repo.mosquitto.org/debian wheezy main' state=present
+- name: install mosquitto
+  apt: state=latest name=mosquitto
+- name: install mosquitto-clients
+  apt: state=latest name=mosquitto-clients
+- name: install libmosquitto1
+  apt: state=latest name=libmosquitto1
+- name: install avahi-daemon
+  apt: state=latest name=avahi-daemon

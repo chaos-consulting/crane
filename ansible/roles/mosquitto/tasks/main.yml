@@ -1,0 +1,4 @@
+- name: Install mosquitto server
+  include: install-mosquitto.yml
+- name: Configure mosquitto server
+  include: configure-mosquitto.yml

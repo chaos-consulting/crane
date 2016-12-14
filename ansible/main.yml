@@ -1,0 +1,36 @@
+- hosts: crane
+  tasks:
+    - name: set hostname
+      become: true
+      become_user: root
+      hostname: name=crane.chaos-consulting.de
+    - name: create openhab group
+      become: true
+      become_user: root
+      group: state=present name=openhab
+    - name: create openhab user
+      become: true
+      become_user: root
+      user: state=present name=openhab home=/opt/openhab/ group=openhab
+    - name: add users to openhab group
+      become: true
+      become_user: root
+      user: name={{ item }} append=yes groups=openhab state=present
+      with_items:
+        - pi
+        - jb
+        - domfi
+    - name: allow all openhab members to become openhab user
+      become: true
+      become_user: root
+      lineinfile: "dest=/etc/sudoers state=present regexp='^%openhab' line='%openhab ALL=(ALL) NOPASSWD: ALL'"
+
+- hosts: crane
+  become: true
+  become_user: root
+  roles:
+    - mosquitto
+    - openhab
+  tasks:
+    - name: install openjdk-8-runtime
+      apt: state=latest name=openjdk-8-jre-headless

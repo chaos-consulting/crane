@@ -1,0 +1,30 @@
+- include_vars: "{{inventory_hostname}}.yml"
+- name: copy tls key for {{inventory_hostname}}
+  copy:
+    content="{{mosquitto_key}}"
+    dest=/etc/mosquitto/certs/mosquitto.key
+    owner=mosquitto
+    group=mosquitto
+    mode=0400
+- name: copy tls cert for {{inventory_hostname}}
+  copy:
+    content="{{mosquitto_cert}}"
+    dest=/etc/mosquitto/certs/mosquitto.crt
+    owner=mosquitto
+    group=mosquitto
+    mode=0400
+- name: copy ca file for {{inventory_hostname}}
+  copy:
+    content="{{mosquitto_ca_cert}}"
+    dest=/etc/mosquitto/certs/ca.crt
+    owner=mosquitto
+    group=mosquitto
+    mode=0444
+- name: copy acl file
+  copy: src=files/mosquitto.acl dest=/etc/mosquitto owner=mosquitto group=mosquitto mode=0400
+- name: copy password file
+  copy: src=files/mosquitto.pw dest=/etc/mosquitto owner=mosquitto group=mosquitto mode=0400
+- name: copy tls configuration file
+  copy: src=files/tls.conf dest=/etc/mosquitto/conf.d owner=mosquitto group=mosquitto mode=0400
+- name: copy avahi service definition
+  copy: src=files/mqtts.service dest=/etc/avahi/services/ owner=root group=root mode=0444
