@@ -27,7 +27,7 @@ Dieses Playbook wird vermutlich selten ausgeführt.
 ### HowTo `main.yml`
 
 ```bash
-ansible-playbook -i hosts main.yml
+ansible-playbook -i hosts main.yml --vault-password-file=.vaultpass.txt
 ```
 
 Installiert die Offline-Version von openHAB2 inkl. einiger Tools und der Konfiguration für die Installation
