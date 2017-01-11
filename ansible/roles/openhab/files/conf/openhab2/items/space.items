@@ -1,0 +1,14 @@
+// Räume
+Group gRaum
+Group gFlur "Flur" <corridor> (gRaum)
+Group gKloVorn "Klo (vorn)" <toilet> (gRaum)
+Group gKueche "Küche" <kitchen> (gRaum)
+Group gServer "Serverraum" <boiler_viessmann> (gRaum)
+Group gKloHinten "Klo (hinten)" <toilet> (gRaum)
+Group gWerkstatt "Werkstatt" <niveau> (gRaum)
+Group gKonferenz "Konferenzraum" <projector_benq> (gRaum)
+
+// Türen
+Group gTuer
+Contact spaceTuer "Spacetür" <door> (gTuer)
+Switch  spaceTuerSwitch <door> (gTuer)
