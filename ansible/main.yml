@@ -31,6 +31,3 @@
   roles:
     - mosquitto
     - openhab
-  tasks:
-    - name: install openjdk-8-runtime
-      apt: state=latest name=openjdk-8-jre-headless

@@ -1,3 +1,5 @@
+- name: install mosquitto dependencies
+  apt: name=oracle-java8-jdk state=present
 - name: Install mosquitto server
   include: install-mosquitto.yml
 - name: Configure mosquitto server
