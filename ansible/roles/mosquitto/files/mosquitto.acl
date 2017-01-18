@@ -1,6 +1,5 @@
 topic read $SYS/#
 
 user testeruser
-topic readwrite outTopic
-topic readwrite inTopic
+topic readwrite crane/#
 
