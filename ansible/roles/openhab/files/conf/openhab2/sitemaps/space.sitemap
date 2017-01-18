@@ -1,4 +1,18 @@
 sitemap space label="C2IS Space" {
-    Frame label="Status" {
+    Frame label="Space" {
+        Frame label="Status" {
+            Text item=spaceTuer label="Space ist [%1s]"
+        }
+
+        Frame label="Räume" {
+            Switch item=spaceTuerSwitch
+            Group item=gFlur
+            Group item=gKloVorn
+            Group item=gKueche
+            Group item=gServer
+            Group item=gKloHinten
+            Group item=gWerkstatt
+            Group item=gKonferenz
+        }
     }
 }

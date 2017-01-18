@@ -1,0 +1,10 @@
+rule "switch the presence state"
+when
+    Item spaceTuerSwitch changed
+then
+    if (spaceTuerSwitch.state === ON) {
+        sendCommand(spaceTuer, OPEN)
+    } else {
+        sendCommand(spaceTuer, CLOSED)
+    }
+end
