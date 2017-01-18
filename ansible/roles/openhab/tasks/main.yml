@@ -10,6 +10,8 @@
   apt: name=openhab2-offline state=latest update_cache=true
 - name: add configuration
   synchronize: src=files/conf/openhab2 dest=/etc/ owner=no group=no
+- name: add templates
+  template: src=templates/openhab/mqtt1.cfg.j2 dest=/etc/openhab2/services/mqtt1.cfg owner=openhab group=openhab
 - name: use openhab user/group for configuration files
   file: dest=/etc/openhab2 owner=openhab group=openhab recurse=yes
 - name: enable openhab2 service
