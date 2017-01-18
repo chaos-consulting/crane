@@ -1,8 +1,8 @@
 rule "switch the presence state"
 when
-    Item spaceTuerSwitch changed
+    Item mainSwitch changed
 then
-    if (spaceTuerSwitch.state === ON) {
+    if (mainSwitch.state === ON) {
         sendCommand(spaceTuer, OPEN)
     } else {
         sendCommand(spaceTuer, CLOSED)

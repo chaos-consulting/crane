@@ -5,7 +5,7 @@ sitemap space label="C2IS Space" {
         }
 
         Frame label="Räume" {
-            Switch item=spaceTuerSwitch
+            Switch item=mainSwitch label="Hauptschalter (do not use me!)"
             Group item=gFlur
             Group item=gKloVorn
             Group item=gKueche
