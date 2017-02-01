@@ -4,7 +4,9 @@ when
 then
     if (mainSwitch.state === ON) {
         sendCommand(spaceTuer, OPEN)
+        sendTelegram("crane", "Space ist offen ✅")
     } else {
         sendCommand(spaceTuer, CLOSED)
+        sendTelegram("crane", "Der Space ist geschlossen ❌")
     }
 end
