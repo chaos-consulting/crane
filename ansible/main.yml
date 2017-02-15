@@ -30,4 +30,5 @@
   become_user: root
   roles:
     - mosquitto
+    - nginx
     - openhab

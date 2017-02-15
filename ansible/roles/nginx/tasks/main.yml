@@ -1,0 +1,13 @@
+---
+
+- name: install nginx
+  tags: nginx
+  apt: name=nginx state=present
+- name: enable nginx
+  tags: nginx
+  service: name=nginx enabled=yes state=started
+- name: nginx configuration
+  tags: nginx
+  template: src=templates/{{ item.src }} dest=/etc/nginx/{{ item.dest }}
+  with_items:
+    - { src: "openhab.j2", dest: "sites-enabled/openhab" }
