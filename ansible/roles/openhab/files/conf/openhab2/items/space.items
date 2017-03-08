@@ -12,3 +12,4 @@ Group gKonferenz "Konferenzraum" <projector_benq> (gRaum)
 Group gTuer
 Contact spaceTuer "Spacetür" <door> (gTuer)
 Switch  mainSwitch <door> (gTuer) { mqtt="<[mosquitto:crane/mainswitch/state:command:ON:on],<[mosquitto:crane/mainswitch/state:command:OFF:off]" }
+Switch  doorOpener <door> (gTuer) { mqtt=">[mosquitto:crane/doornode/action:command:ON:on],>[mosquitto:crane/doornode/action:command:OFF:off]" }

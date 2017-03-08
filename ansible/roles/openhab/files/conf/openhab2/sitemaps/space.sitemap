@@ -4,6 +4,10 @@ sitemap space label="C2IS Space" {
             Text item=spaceTuer label="Space ist [%1s]"
         }
 
+        Frame label="Aktionen" {
+            Switch item=doorOpener label="Türöffner"
+        }
+
         Frame label="Räume" {
             Group item=gFlur
             Group item=gKloVorn
