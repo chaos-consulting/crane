@@ -1,13 +1,13 @@
 ---
 
 - name: install openhab dependencies
-  apt: name=rsync,oracle-java8-jdk state=present
+  apt: name=rsync,oracle-java8-jdk,apt-transport-https state=present
 - name: add openhab gpg key
   apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=openhab state=present
-- name: add openhab2 beta repo
-  apt_repository: repo="deb http://dl.bintray.com/openhab/apt-repo2 testing main" filename=openhab2 state=present
-- name: install openhab2 offline
-  apt: name=openhab2-offline state=latest update_cache=true
+- name: add openhab2 repo
+  apt_repository: repo="deb https://dl.bintray.com/openhab/apt-repo2 stable main" filename=openhab2 state=present
+- name: install openhab2
+  apt: name=openhab2 state=latest update_cache=true
 - name: add configuration
   synchronize: src=files/conf/openhab2 dest=/etc/ owner=no group=no
 - include_vars: "{{inventory_hostname}}.yml"
