@@ -1,0 +1,50 @@
+---
+
+- name: initiate challenge
+  become: yes
+  become_user: root
+  letsencrypt:
+    account_key: /etc/letsencrypt/accounts/acme-v01.api.letsencrypt.org/directory/db155c5671820eee4f9a0657470102c8/account.key
+    acme_directory: https://acme-v01.api.letsencrypt.org/directory
+    account_email: julian@svg4all.de
+    agreement: https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf
+    csr: /etc/ssl/private/crane.csr
+    cert: /etc/ssl/private/cert.pem
+    challenge: dns-01
+  register: le_challenge
+- name: fullfill challenge
+  nsupdate:
+    key_name: letsencrypt
+    key_algorithm: hmac-sha512
+    key_secret: "{{ DNS_API_KEY }}"
+    server: "::1"
+    zone: c2is.johnyb.de
+    record: "{{ item.value['dns-01']['resource'] }}.{{ item.key|regex_replace('\\..*$') }}"
+    type: TXT
+    ttl: 10
+    value: "{{ item.value['dns-01']['resource_value'] }}"
+    state: present
+  delegate_to: ns.johnyb.de
+  with_dict: "{{ le_challenge.challenge_data }}"
+  when: le_challenge | changed
+- name: send response
+  become: yes
+  become_user: root
+  letsencrypt:
+    account_key: /etc/letsencrypt/accounts/acme-v01.api.letsencrypt.org/directory/db155c5671820eee4f9a0657470102c8/account.key
+    acme_directory: https://acme-v01.api.letsencrypt.org/directory
+    #account_key: /etc/letsencrypt/accounts/acme-staging.api.letsencrypt.org/directory/e9ea71c8b5b627c5ef45c7e61ba5be6e/account.key
+    account_email: julian@svg4all.de
+    csr: /etc/ssl/private/crane.csr
+    cert: /etc/ssl/private/cert.pem
+    challenge: dns-01
+    data: "{{ le_challenge }}"
+- name: create fullchain file with latest certificate
+  shell: cat /etc/ssl/private/cert.pem /etc/letsencrypt/certs/chain.pem > /etc/ssl/crane_fullchain.pem
+  when: le_challenge | changed
+
+#- name: reload nginx
+#  become: yes
+#  become_user: root
+#  service: name=nginx state=restarted
+#  when: le_challenge | changed

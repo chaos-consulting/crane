@@ -1,0 +1,7 @@
+- hosts: crane
+  become: true
+  become_user: root
+  roles:
+    - dns
+    - ssl
+    - nginx

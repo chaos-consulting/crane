@@ -1,0 +1,15 @@
+- name: add DNS records
+  nsupdate:
+    key_name: letsencrypt
+    key_algorithm: hmac-sha512
+    key_secret: "{{ DNS_API_KEY }}"
+    server: "::1"
+    zone: c2is.johnyb.de
+    state: present
+    record: "{{ item.name }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+  delegate_to: ns.ohnyb.de
+  with_items:
+    - { name: crane, type: A, value: "192.168.0.100" }
+    - { name: mqtt, type: A, value: "192.168.0.100" }
