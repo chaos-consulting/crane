@@ -19,3 +19,28 @@ server {
         root   /usr/share/nginx/html;
     }
 }
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name crane.c2is.johnyb.de;
+
+    ssl_certificate      /etc/ssl/crane_fullchain.pem;
+    ssl_certificate_key  /etc/ssl/private/privkey.pem;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    root /home/jb/talk/;
+    location / {
+        autoindex on;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
